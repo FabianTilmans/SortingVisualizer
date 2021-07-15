@@ -1,0 +1,11 @@
+.sorted > span {
+    color: green;
+}
+
+.swapping > span {
+    color: blue;
+}
+
+.comparing > span {
+    color: red;
+}
