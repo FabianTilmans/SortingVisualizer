@@ -1,6 +1,14 @@
 import React, { Component } from "react";
-import "./App.css";
-import Header, {HeaderControls} from "./components/Header";
+
+//Components
+import Footer from "./components/Footer";
+import SortingVisualiszer from "./components/SortingVisualizer";
+
+//Constants
+import { ALGORITHM } from "./algorithms";
+
+//Types
+import { TraceItem } from "./types/Trace";
 
 type Props = {};
 
@@ -8,16 +16,16 @@ type State = {
     algorithm: string;
     array: number[];
     arraySize: number;
-    history: number[];
+    trace: TraceItem[];
 };
 
 class App extends Component<Props, State> {
     //State
-    state: State = {
+    state = {
         algorithm: "Bubble Sort",
         array: [],
         arraySize: 25,
-        history: [],
+        trace: [],
     };
 
     //Hooks
@@ -25,48 +33,46 @@ class App extends Component<Props, State> {
         this.generateRandomArray();
     }
 
-    //Functions
-    generateRandomArray = (): void => {
-        //Generate a random Number
+    //Methods
+    generateRandomArray = () => {
         const getRandomNumber = (max: number): number => {
             return Math.floor(Math.random() * max) + 1;
         };
 
         let array: number[] = [];
         for (let i = 0; i < this.state.arraySize; i++) {
-            array.push(getRandomNumber(this.state.arraySize * 2));
+            array.push(getRandomNumber(this.state.arraySize * 5));
         }
-
-        console.log(array)
 
         this.setState(
             {
                 array,
-                history: [],
+                trace: [],
             },
-            this.createHistory
+            this.generateTrace
         );
     };
 
-    createHistory = (): void => {
-        this.setState({ history: [] });
+    generateTrace = () => {
+        const arr = [...this.state.array];
+        const algo = ALGORITHM[this.state.algorithm];
+        if (algo) {
+            const trace = algo(arr);
+            this.setState({ trace });
+        }
     };
 
-    handleAlgorithmChange = (algorithm: string): void => {
-        this.setState({ algorithm }, this.generateRandomArray);
-    };
-
-    //Render
     render() {
-
-        const headerControls = <HeaderControls onGenerateNewArray={this.generateRandomArray} onSort={() => console.log("Sort")}/>
-
         return (
-            <div className="App">
-                <Header>{headerControls}</Header>
-
-                <main className="sortingVisualizer">{/* SortingVisualizer */}</main>
-                {/* Footer */}
+            <div className="app">
+                <main className="sorting-visualizer">
+                    <SortingVisualiszer
+                        array={this.state.array}
+                        arraySize={this.state.arraySize}
+                        trace={this.state.trace}
+                    />
+                </main>
+                <Footer />
             </div>
         );
     }
