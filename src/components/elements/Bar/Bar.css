@@ -1,11 +1,17 @@
-.sorted > span {
-    color: green;
+.bar {
+    background-color: black;
+    padding: 0.5em;
+    color:white;
 }
 
-.swapping > span {
-    color: blue;
+.sorted {
+    background-color: green;
 }
 
-.comparing > span {
-    color: red;
+.swapping {
+    background-color: blue;
+}
+
+.comparing {
+    background-color: red;
 }

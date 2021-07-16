@@ -1,12 +1,17 @@
 import React, { Component, Fragment } from "react";
-import { TraceItem } from "../types/Trace";
-import Chart from "./Chart";
-import Controls from "./Controls";
+import { TraceItem } from "../../types/Trace";
+import Chart from "../Chart";
+import Controls from "../Controls";
+
+//Styles
+import "./SortingVisualizer.css";
 
 type Props = {
     trace: TraceItem[];
     array: number[];
     arraySize: number;
+    selectedAlgorithm: string;
+    onAlgoChange: (selected: string) => void;
 };
 
 type State = {
@@ -21,6 +26,7 @@ type State = {
 
     timeoutIds: NodeJS.Timeout[];
     speed: number;
+    running: boolean
 };
 
 class SortingVisualiszer extends Component<Props, State> {
@@ -35,7 +41,8 @@ class SortingVisualiszer extends Component<Props, State> {
         sorted: [],
 
         timeoutIds: [],
-        speed: 1,
+        speed: 10,
+        running: false,
     };
 
     componentDidUpdate(prevProps: Props) {
@@ -50,10 +57,11 @@ class SortingVisualiszer extends Component<Props, State> {
 
     clearTimeouts = () => {
         this.state.timeoutIds.forEach((timeoutid) => clearTimeout(timeoutid));
-        this.setState({ timeoutIds: [] });
+        this.setState({ timeoutIds: [], running: false });
     };
 
     run = (trace: TraceItem[]): void => {
+        this.setState({running: true})
         const timeoutIds = [];
         const timer = 250 / this.state.speed;
 
@@ -99,7 +107,6 @@ class SortingVisualiszer extends Component<Props, State> {
             currentSwapped: [],
             sorted: [],
         }));
-        this.run(this.state.trace);
     };
 
     reset = (array: number[]) => {
@@ -126,14 +133,20 @@ class SortingVisualiszer extends Component<Props, State> {
     render() {
         return (
             <Fragment>
-                <section className="controls"></section>
-                <Controls
-                    onStart={
-                        this.state.traceStep === -1
-                            ? this.run.bind(this, this.state.trace)
-                            : this.continue.bind(this)
-                    }
-                />
+                <section className="controls">
+                    <Controls
+                        running={this.state.running}
+                        onStart={
+                            this.state.traceStep === -1
+                                ? this.run.bind(this, this.state.trace)
+                                : this.continue.bind(this)
+                        }
+                        onPause={this.pause.bind(this)}
+                        onRepeat={this.repeat.bind(this, this.state.originalArray)}
+                        onAlgoChange={this.props.onAlgoChange}
+                    />
+                </section>
+
                 <section className="chart">
                     <Chart
                         array={this.state.array}

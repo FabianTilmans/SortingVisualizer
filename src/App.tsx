@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 //Components
 import Footer from "./components/Footer";
-import SortingVisualiszer from "./components/SortingVisualizer";
+import SortingVisualiszer from "./components/SortingVisualizer/SortingVisualizer";
 
 //Constants
 import { ALGORITHM } from "./algorithms";
@@ -24,7 +24,7 @@ class App extends Component<Props, State> {
     state = {
         algorithm: "Bubble Sort",
         array: [],
-        arraySize: 25,
+        arraySize: 40,
         trace: [],
     };
 
@@ -58,9 +58,14 @@ class App extends Component<Props, State> {
         const algo = ALGORITHM[this.state.algorithm];
         if (algo) {
             const trace = algo(arr);
+            console.log(trace)
             this.setState({ trace });
         }
     };
+
+    handleAlgorithmChange = (algorithm: string) => {
+        this.setState({algorithm}, this.generateRandomArray)
+    }
 
     render() {
         return (
@@ -70,6 +75,8 @@ class App extends Component<Props, State> {
                         array={this.state.array}
                         arraySize={this.state.arraySize}
                         trace={this.state.trace}
+                        selectedAlgorithm={this.state.algorithm}
+                        onAlgoChange={this.handleAlgorithmChange}
                     />
                 </main>
                 <Footer />

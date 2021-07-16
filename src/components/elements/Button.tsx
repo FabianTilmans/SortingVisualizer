@@ -13,7 +13,7 @@ const Button: FC<Props> = ({ label, onClick, disabled, href, styles, children, c
     if (href) {
         return (
             <a href={href} className={className}>
-                <span className="Button__Label">{children}</span>
+                <span className="label">{children}</span>
             </a>
         );
     }
