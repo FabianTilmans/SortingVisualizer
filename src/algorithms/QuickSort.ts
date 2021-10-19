@@ -8,17 +8,15 @@ const QuickSort = (array: number[]) => {
         let j = start + 1;
 
         while (j <= end) {
-            addToTrace(trace, array, lastSorted(trace), [], [j, start])
             if (array[j] < array[start]) {
                 swap(array, i, j);
-                addToTrace(trace,array,lastSorted(trace), [i,j]);
+                addToTrace(trace, array, lastSorted(trace), [i, j])
                 i += 1;
             }
             j += 1;
         }
-
-        addToTrace(trace, array, lastSorted(trace), [start, i-1]);
         swap(array, start, i - 1);
+        addToTrace(trace, array, lastSorted(trace), [start, i-1])
 
         return i - 1;
     };
@@ -31,7 +29,7 @@ const QuickSort = (array: number[]) => {
             return null;
         }
 
-        let pivot = end;
+        let pivot = start;
 
         swap(array, start, pivot);
         addToTrace(trace, array, lastSorted(trace), [start, pivot])

@@ -8,10 +8,11 @@ type Props = {
     onStart: () => void;
     onPause: () => void;
     onRepeat: () => void;
+    onShuffle: () => void;
     onAlgoChange: (algorithm: string) => void;
 };
 
-const Controls: FC<Props> = ({ running, onStart, onPause, onRepeat, onAlgoChange }) => {
+const Controls: FC<Props> = ({ running, onStart, onPause, onRepeat, onShuffle, onAlgoChange }) => {
 
     const algos = ALGORITHM;
 
@@ -19,6 +20,7 @@ const Controls: FC<Props> = ({ running, onStart, onPause, onRepeat, onAlgoChange
         <Fragment>
             <Button label={running ? "Stop" : "Sort"} onClick={running ? onPause : onStart} />
             <Button label="Reset" onClick={onRepeat} />
+            <Button label="Shuffle" onClick={onShuffle}/>
             <Dropdown
                 name="Algorithms"
                 items={Object.keys(algos)}

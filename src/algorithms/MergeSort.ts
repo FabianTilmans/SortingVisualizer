@@ -11,26 +11,22 @@ const MergeSort = (array: number[]) => {
         let j = 0;
         let k = 0;
         while (i < left.length && j < right.length) {
-            addToTrace(trace, original, [], [], [i,j+mid]);
             if (left[i] <= right[j]) {
-                addToTrace(trace, original, [], [k + start, i]);
                 original[k + start] = left[i];
                 i++;
             } else {
-                addToTrace(trace, original, [], [k+start, j+mid]);
                 original[k + start] = right[j];
                 j++;
             }
             k++;
+            addToTrace(trace, array, [], [i + start, k + start])
         }
-        while (i < left.length) {
-            addToTrace(trace, original, [], [k + start, i]);
+        while (i < left.length) {            
             original[k + start] = left[i];
             i++;
             k++;
         }
-        while (j < right.length) {
-            addToTrace(trace, original, [], [k+start, j+mid]);
+        while (j < right.length) {            
             original[k + start] = right[j];
             j++;
             k++;

@@ -11,6 +11,7 @@ type Props = {
     array: number[];
     arraySize: number;
     selectedAlgorithm: string;
+    shuffleArray: () => void;
     onAlgoChange: (selected: string) => void;
 };
 
@@ -143,6 +144,7 @@ class SortingVisualiszer extends Component<Props, State> {
                         }
                         onPause={this.pause.bind(this)}
                         onRepeat={this.repeat.bind(this, this.state.originalArray)}
+                        onShuffle={this.props.shuffleArray}
                         onAlgoChange={this.props.onAlgoChange}
                     />
                 </section>

@@ -77,6 +77,7 @@ class App extends Component<Props, State> {
                         trace={this.state.trace}
                         selectedAlgorithm={this.state.algorithm}
                         onAlgoChange={this.handleAlgorithmChange}
+                        shuffleArray={this.generateRandomArray}
                     />
                 </main>
                 <Footer />
